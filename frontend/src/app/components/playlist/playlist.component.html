@@ -1,0 +1,12 @@
+<div>
+  Playlist:
+  <select [(ngModel)]="selectedPlaylist">
+    <option *ngFor="let playlist of playlists" [ngValue]="playlist">{{playlist.name}}</option>
+  </select>
+
+  <span>Number of tracks: {{numberOfTracks}}</span>
+
+  <span>Total playtime: {{totalPlaytime}}ms</span>
+
+  <button [disabled]="!showAddTrackButton">Add new Track</button>
+</div>
