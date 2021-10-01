@@ -4,7 +4,7 @@ export default class CsvParser {
 
     parse(path: string): any[] {
         const result: any[] = [];
-        const lines: string[] = fs.readFileSync(path).toString().replace(/"/g, '').split('\n');
+        const lines: string[] = fs.readFileSync(path).toString().replace(/\r?\r/g, '').replace(/"/g, '').split('\n');
         let headers: string[] = [];
 
         for (let i = 0; i < lines.length; i++) {
@@ -32,5 +32,4 @@ export default class CsvParser {
 
         return line;
     }
-
 }

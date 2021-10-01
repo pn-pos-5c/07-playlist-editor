@@ -29,4 +29,14 @@ export default class DbService {
 
         return tracks;
     }
+
+    getTracksForGenre(genreId: number): Track[] {
+        return this.tracks.filter(track => track.genreId == genreId);
+    }
+
+    removeTrackFromPlaylist(playlistTrack: PlaylistTrack): void {
+        console.log('length before delete: ', this.playlistTracks.length);
+        this.playlistTracks = this.playlistTracks.filter(track => track.playlistId !== playlistTrack.playlistId && track.trackId !== playlistTrack.trackId);
+        console.log('length after delete: ', this.playlistTracks.length);
+    }
 }
