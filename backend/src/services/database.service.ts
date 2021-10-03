@@ -36,10 +36,6 @@ export default class DbService {
     }
 
     removeTrackFromPlaylist(playlistTrack: PlaylistTrack): void {
-        // console.log('length before delete: ', this.playlistTracks.filter(track => track.playlistId === 1).length);
-        console.log(this.playlistTracks.find(track => JSON.stringify(track) === JSON.stringify(playlistTrack)));
         this.playlistTracks = this.playlistTracks.filter(track => JSON.stringify(track) !== JSON.stringify(playlistTrack));
-        // console.log('length after delete: ', this.playlistTracks.filter(track => track.playlistId === 1).length);
-        console.log(this.playlistTracks.find(track => JSON.stringify(track) === JSON.stringify(playlistTrack)));
     }
 }

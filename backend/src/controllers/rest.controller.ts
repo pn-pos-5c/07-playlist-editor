@@ -53,7 +53,7 @@ export async function removeTrackFromPlaylist(req: Request, res: Response): Prom
     console.log('\nDELETE /track?playlistid=playListid&trackid=trackid');
 
     const playlistId: number = parseInt(req.query.playlistid as string);
-    const trackId: number = parseInt(req.query.trackid as string);
+    const trackId: number = parseInt(req.query.trackid as string) - 1;
 
     const playlistTrack: PlaylistTrack | undefined = createPlaylistTrack(playlistId, trackId, res);
     if (!playlistTrack) return;
