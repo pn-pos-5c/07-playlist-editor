@@ -1,6 +1,6 @@
 <div>
   Playlist:
-  <select [(ngModel)]="selectedPlaylist" (change)="playlistChanged()">
+  <select (change)="playlistChanged()" [(ngModel)]="selectedPlaylist">
     <option *ngFor="let playlist of playlists" [ngValue]="playlist">{{playlist.name}}</option>
   </select>
 
@@ -8,11 +8,11 @@
 
   <span>Total playtime: {{totalPlaytime}}</span>
 
-  <button [disabled]="!playlistSelected">Add new Track</button>
+  <button class="btn btn-primary" [disabled]="!playlistSelected">Add new Track</button>
 </div>
 
 <div>
-  <table *ngIf="playlistSelected">
+  <table class="table" *ngIf="playlistSelected">
     <thead>
     <tr>
       <td>Track#</td>
@@ -27,8 +27,9 @@
       <td>{{track.trackId}}</td>
       <td>{{track.name}}</td>
       <td>{{track.albumId}}</td>
-      <td>{{track.genreId}}</td>
-      <td>{{track.milliseconds}}</td>
+      <td>{{getGenre(track.genreId)}}</td>
+      <td>{{formatMs(track.milliseconds)}}</td>
+      <td><i class="bi bi-trash" (click)="removeFromPlaylist(track)"></i></td>
     </tr>
     </tbody>
   </table>

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import {Injectable} from '@angular/core';
+import axios, {AxiosInstance, AxiosResponse} from 'axios';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,15 @@ export class DataProviderService {
   async fetchTracksForPlaylist(playlistId: number): Promise<AxiosResponse> {
     console.log('GET /api/playlisttracks/:playlistId');
     return this.backend.get(`/playlisttracks/${playlistId}`);
+  }
+
+  async fetchGenres(): Promise<AxiosResponse> {
+    console.log('GET /api/genres');
+    return this.backend.get('/genres');
+  }
+
+  async removeTrackFromPlaylist(playlistId: number, trackId: number): Promise<AxiosResponse> {
+    console.log('DELETE /api/track?playlistid=playlistId&trackid=trackId');
+    return this.backend.delete(`/track?playlistid=${playlistId}&trackid=${trackId}`);
   }
 }

@@ -1,4 +1,4 @@
 export default interface Genre {
-    id: number;
-    name: string;
+  genreId: number;
+  name: string;
 }
