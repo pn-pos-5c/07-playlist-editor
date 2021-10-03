@@ -1,5 +1,5 @@
 export default interface Track {
-    id: number;
+    trackId: number;
     name: string;
     albumId: number;
     mediaTypeId: number;

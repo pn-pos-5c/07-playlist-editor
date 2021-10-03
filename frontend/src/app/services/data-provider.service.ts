@@ -19,4 +19,9 @@ export class DataProviderService {
     console.log('GET /api/playlists');
     return this.backend.get('/playlists');
   }
+
+  async fetchTracksForPlaylist(playlistId: number): Promise<AxiosResponse> {
+    console.log('GET /api/playlisttracks/:playlistId');
+    return this.backend.get(`/playlisttracks/${playlistId}`);
+  }
 }

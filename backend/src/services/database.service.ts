@@ -27,7 +27,7 @@ export default class DbService {
             tracks.push(this.tracks[playlistTrack.trackId]);
         }
 
-        return tracks;
+        return tracks.sort((a, b) => a.name > b.name ? 1 : -1);
     }
 
     getTracksForGenre(genreId: number): Track[] {

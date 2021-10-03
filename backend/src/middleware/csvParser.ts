@@ -4,11 +4,13 @@ export default class CsvParser {
 
     parse(path: string): any[] {
         const result: any[] = [];
-        const lines: string[] = fs.readFileSync(path).toString().replace(/\r?\r/g, '').replace(/"/g, '').split('\n');
+        const lines: string[] = fs.readFileSync(path).toString().replace(/\r?\r/g, '').split('\n');
         let headers: string[] = [];
 
         for (let i = 0; i < lines.length; i++) {
-            const line: string[] = lines[i].split(',');
+            let line: string[] = lines[i].split('",');
+            line = line.join('|').replace(/"/g, '').split('|');
+
             if (i === 0) {
                 headers = CsvParser.lowerCase(line);
                 continue;
@@ -16,7 +18,11 @@ export default class CsvParser {
 
             let object: any = {};
             for (let j = 0; j < line.length; j++) {
-                object[headers[j]] = line[j];
+                if (!isNaN(Number(line[j]))) {
+                    object[headers[j]] = parseInt(line[j]);
+                } else {
+                    object[headers[j]] = line[j];
+                }
             }
 
             result.push(object);
