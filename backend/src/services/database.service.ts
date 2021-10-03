@@ -20,23 +20,26 @@ export default class DbService {
     }
 
     getPlaylistTracks(playlistId: number): Track[] {
-        const playlistTracks = this.playlistTracks.filter(track => track.playlistId == playlistId);
+        const playlistTracks = this.playlistTracks.filter(track => track.playlistId === playlistId);
 
         const tracks: Track[] = [];
         for (const playlistTrack of playlistTracks) {
-            tracks.push(this.tracks[playlistTrack.trackId]);
+            const track = this.tracks[playlistTrack.trackId];
+            if (track) tracks.push(track);
         }
 
         return tracks.sort((a, b) => a.name > b.name ? 1 : -1);
     }
 
     getTracksForGenre(genreId: number): Track[] {
-        return this.tracks.filter(track => track.genreId == genreId);
+        return this.tracks.filter(track => track.genreId === genreId);
     }
 
     removeTrackFromPlaylist(playlistTrack: PlaylistTrack): void {
-        console.log('length before delete: ', this.playlistTracks.length);
-        this.playlistTracks = this.playlistTracks.filter(track => track.playlistId !== playlistTrack.playlistId && track.trackId !== playlistTrack.trackId);
-        console.log('length after delete: ', this.playlistTracks.length);
+        // console.log('length before delete: ', this.playlistTracks.filter(track => track.playlistId === 1).length);
+        console.log(this.playlistTracks.find(track => JSON.stringify(track) === JSON.stringify(playlistTrack)));
+        this.playlistTracks = this.playlistTracks.filter(track => JSON.stringify(track) !== JSON.stringify(playlistTrack));
+        // console.log('length after delete: ', this.playlistTracks.filter(track => track.playlistId === 1).length);
+        console.log(this.playlistTracks.find(track => JSON.stringify(track) === JSON.stringify(playlistTrack)));
     }
 }

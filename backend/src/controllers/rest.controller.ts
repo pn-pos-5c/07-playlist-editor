@@ -58,10 +58,10 @@ export async function removeTrackFromPlaylist(req: Request, res: Response): Prom
     const playlistTrack: PlaylistTrack | undefined = createPlaylistTrack(playlistId, trackId, res);
     if (!playlistTrack) return;
 
-    if (dbService.playlistTracks.find(track => track.playlistId === playlistTrack.playlistId && track.trackId === playlistTrack.trackId) === undefined) {
-        res.status(400).send();
-        return;
-    }
+    // if (dbService.playlistTracks.find(track => track.playlistId === playlistTrack.playlistId && track.trackId === playlistTrack.trackId) === undefined) {
+    //     res.status(400).send();
+    //     return;
+    // }
 
     dbService.removeTrackFromPlaylist(playlistTrack);
     res.status(200).send();

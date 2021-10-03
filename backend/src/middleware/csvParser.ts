@@ -16,6 +16,8 @@ export default class CsvParser {
                 continue;
             }
 
+            if (line.length !== headers.length) continue;
+
             let object: any = {};
             for (let j = 0; j < line.length; j++) {
                 if (!isNaN(Number(line[j]))) {
