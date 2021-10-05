@@ -8,11 +8,14 @@
 
   <span>Total playtime: {{totalPlaytime}}</span>
 
-  <button class="btn btn-primary" [disabled]="!playlistSelected">Add new Track</button>
+  <button (click)="addNewTrack()" [disabled]="!playlistSelected" class="btn btn-primary">Add new Track</button>
 </div>
 
+<app-add-track (cancelAddTrackDialog)="cancelAddTrackDialog()" *ngIf="showAddTrack"
+               [selectedPlaylist]="this.selectedPlaylist"></app-add-track>
+
 <div>
-  <table class="table" *ngIf="playlistSelected">
+  <table *ngIf="playlistSelected" class="table">
     <thead>
     <tr>
       <td>Track#</td>
@@ -27,9 +30,9 @@
       <td>{{track.trackId}}</td>
       <td>{{track.name}}</td>
       <td>{{track.albumId}}</td>
-      <td>{{getGenre(track.genreId)}}</td>
-      <td>{{formatMs(track.milliseconds)}}</td>
-      <td><i class="bi bi-trash" (click)="removeFromPlaylist(track)"></i></td>
+      <td>{{getGenre(track.genreId!)}}</td>
+      <td>{{formatMs(track.milliseconds!)}}</td>
+      <td><i (click)="removeFromPlaylist(track)" class="bi bi-trash"></i></td>
     </tr>
     </tbody>
   </table>

@@ -14,18 +14,21 @@ export class PlaylistComponent implements OnInit {
   tracks!: Track[];
   genres!: Genre[];
   selectedPlaylist: Playlist;
+
   playlistSelected: boolean;
+  showAddTrack: boolean;
 
   numberOfTracks: number = 0;
   totalPlaytime: string = '0ms';
 
   constructor(public dataProviderService: DataProviderService) {
-    this.loadData();
     this.selectedPlaylist = {playlistId: -1, name: 'select one'};
     this.playlistSelected = false;
+    this.showAddTrack = false;
   }
 
   ngOnInit(): void {
+    this.loadData();
   }
 
   formatMs(ms: number): string {
@@ -52,10 +55,23 @@ export class PlaylistComponent implements OnInit {
     if (!this.playlistSelected) return;
 
     this.tracks = (await this.dataProviderService.fetchTracksForPlaylist(this.selectedPlaylist.playlistId)).data;
-    console.log(this.tracks);
 
     this.numberOfTracks = this.tracks.length;
-    this.totalPlaytime = this.formatMs(this.tracks.reduce((prev: number, curr: Track) => prev + curr.milliseconds, 0));
+    this.totalPlaytime = this.formatMs(this.tracks.reduce((prev: number, curr: Track) => prev + curr.milliseconds!, 0));
+  }
+
+  async removeFromPlaylist(track: Track) {
+    await this.dataProviderService.removeTrackFromPlaylist(this.selectedPlaylist.playlistId, track.trackId);
+    this.tracks = (await this.dataProviderService.fetchTracksForPlaylist(this.selectedPlaylist.playlistId)).data;
+  }
+
+  async cancelAddTrackDialog() {
+    this.showAddTrack = false;
+    this.tracks = (await this.dataProviderService.fetchTracksForPlaylist(this.selectedPlaylist.playlistId)).data;
+  }
+
+  addNewTrack() {
+    this.showAddTrack = true;
   }
 
   private async loadData() {
@@ -64,12 +80,5 @@ export class PlaylistComponent implements OnInit {
 
     this.playlists.unshift(this.selectedPlaylist);
     this.selectedPlaylist = this.playlists[0];
-  }
-
-  async removeFromPlaylist(track: Track) {
-    await this.dataProviderService.removeTrackFromPlaylist(this.selectedPlaylist.playlistId, track.trackId);
-    this.tracks = (await this.dataProviderService.fetchTracksForPlaylist(this.selectedPlaylist.playlistId)).data;
-    console.log(this.tracks);
-    // this.tracks = this.tracks.filter(track => JSON.stringify(track) !== JSON.stringify(track));
   }
 }

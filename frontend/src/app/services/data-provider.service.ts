@@ -34,4 +34,14 @@ export class DataProviderService {
     console.log('DELETE /api/track?playlistid=playlistId&trackid=trackId');
     return this.backend.delete(`/track?playlistid=${playlistId}&trackid=${trackId}`);
   }
+
+  async fetchTracksForGenre(genreId: number): Promise<AxiosResponse> {
+    console.log('GET /api/tracks?genreid=genreId');
+    return this.backend.get(`/tracks?genreid=${genreId}`);
+  }
+
+  async addTrackToPlaylist(playlistId: number, trackId: number): Promise<AxiosResponse> {
+    console.log('POST /api/track');
+    return this.backend.post('/track', {playlistid: playlistId, trackid: trackId});
+  }
 }
